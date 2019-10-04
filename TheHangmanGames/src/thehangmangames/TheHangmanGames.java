@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package thehangmangames;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -16,7 +17,7 @@ import javafx.stage.Stage;
  *
  * @author mingsop
  */
-public class FXMain extends Application {
+public class TheHangmanGames extends Application {
     
     @Override
     public void start(Stage primaryStage) {
