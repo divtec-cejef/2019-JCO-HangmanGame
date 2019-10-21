@@ -1,4 +1,4 @@
-/*
+/*}
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -6,23 +6,27 @@
 import java.util.*;
 import java.io.FileReader;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException; 
 /**
  *
  * @author mingsop
  */
 public class Mots {
+    
+  public static void main(String[] args) {
     //Lire le fichier texte et choisir un mot aléatoire dedant
     //En attendant de trouver la solution, j'ai mit des mots dans un tableau
-    String tableauMots[] = {"Fer à souder","Revolution","Joueur","accolades","temps"};
+    String tableauMotsFacile[] = {"Vent","Table","Chaton","Rire","Simple"};
+    String tableauMotsMoyen[] = {"Zebre","Rotule","cachalot","accolader","igloo"};
+    String tableauMotsDifficile[] = {"rempaillage","rénaux","fébrilement","zygopétale"};
     
     
     //Choisir un mot aéléatoirement
-    Random rand=new Random();
-    int nombreAleatoire=rand.nextInt(tableauMots.length);
+    Random rand=new Random();          
+    int nombreAleatoire=rand.nextInt(tableauMotsFacile.length);
+  }
     
-      public void ReadLineTxt() throws IOException{
+     public void ReadLineTxt() throws IOException{
         BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\mingsop\\Downloads\\dictionnaire\\dictionnaire.txt"));
         String line;
 	while ((line = in.readLine()) != null){
@@ -30,9 +34,6 @@ public class Mots {
             System.out.println (line);
 	}
 	in.close();
-          
-
-  }
+     }
           
 }
-
