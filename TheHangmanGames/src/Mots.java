@@ -6,7 +6,8 @@
 import java.util.*;
 import java.io.FileReader;
 import java.io.BufferedReader;
-import java.io.IOException; 
+import thehangmangames.Menu;
+
 /**
  *
  * @author mingsop
@@ -24,16 +25,6 @@ public class Mots {
     //Choisir un mot aéléatoirement
     Random rand=new Random();          
     int nombreAleatoire=rand.nextInt(tableauMotsFacile.length);
-  }
     
-     public void ReadLineTxt() throws IOException{
-        BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\mingsop\\Downloads\\dictionnaire\\dictionnaire.txt"));
-        String line;
-	while ((line = in.readLine()) != null){
-            // Afficher le contenu du fichier
-            System.out.println (line);
-	}
-	in.close();
-     }
-          
+  }
 }

@@ -24,9 +24,7 @@ import javafx.stage.Stage;
  *
  * @author mingsop
  */
-public class Menu extends Application {
-    
-  
+public class Menu extends Application { 
     
     Label choixDifficulte = new Label("Choix de la difficulté : None");
 
@@ -35,7 +33,8 @@ public class Menu extends Application {
     }
  
     @Override
-    public void start(Stage primaryStage) {    
+    public void start(Stage primaryStage) { 
+        
         //Creation des boutons
         ToggleButton choixfacile = new ToggleButton("Facile");
         ToggleButton choixMoyen = new ToggleButton("Moyen");
