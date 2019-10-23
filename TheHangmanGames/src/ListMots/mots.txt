@@ -1,0 +1,9 @@
+Chat
+Chien
+Phoque
+Porc
+Girafe
+Furet
+Lion
+Tigre
+Panthere

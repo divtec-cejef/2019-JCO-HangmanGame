@@ -18,11 +18,9 @@ import thehangmangames.SourcesPackages.Mots;
 public class TheHangmanGames extends Application {
      public void start(Stage primaryStage) {
          
-     }
-     public void nombreTiretAAfficher(){
-         
          
      }
+
      
      }
     
