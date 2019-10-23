@@ -7,6 +7,9 @@ package thehangmangames;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import thehangmangames.Menu;
+import thehangmangames.SourcesPackages.Mots;
+
 
 /**
  *
@@ -14,6 +17,10 @@ import javafx.stage.Stage;
  */
 public class TheHangmanGames extends Application {
      public void start(Stage primaryStage) {
+         
+     }
+     public void nombreTiretAAfficher(){
+         
          
      }
      
