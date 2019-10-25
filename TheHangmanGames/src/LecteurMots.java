@@ -20,8 +20,12 @@ public class LecteurMots {
     
     //Création d'une  liste pour les mots
     private ArrayList<String> mots = new ArrayList<String>();
-    
+
+   
    public LecteurMots() {
+       //Ici on fait passer fichierMots pour un flux d'entrée
+       //Et on teste si la lecture du fichier est terminée
+       //Si la Fichier est vide ou introuvable une erreur est déclenché
         try (InputStream in = getClass().getResourceAsStream(fichierMots);
                 BufferedReader bf = new BufferedReader(new InputStreamReader(in))) {
 
@@ -30,8 +34,8 @@ public class LecteurMots {
                 mots.add(ligne);
         }
         catch (Exception e) {
-            System.out.println("Couldn't find/read file: " + fichierMots);
-            System.out.println("Error message: " + e.getMessage());
+            System.out.println("Nous n'arrivons pas à lire trouver le fichier : " + fichierMots);
+            System.out.println("Message d'erreur : " + e.getMessage());
         }
     }
 
@@ -40,7 +44,7 @@ public class LecteurMots {
  * @return le mot tirée aléatoirement
  */
     public String MotsAleatoires() {
-        if (mots.isEmpty()) return "NO-DATA";
+        if (mots.isEmpty()) return "Aucunes données";
         return mots.get((int)(Math.random()*mots.size()));
     }
 }
