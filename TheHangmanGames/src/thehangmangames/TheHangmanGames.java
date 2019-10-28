@@ -5,7 +5,7 @@
  */
 package thehangmangames;
 
-import TheHangmanGames.LecteurMots;
+import thehangmangames.LecteurMots.java;
 
 
 import java.util.HashMap;
@@ -70,6 +70,14 @@ public class TheHangmanGames extends Application {
 
     private LecteurMots LecteurMot = new LecteurMots();
     
+    
+    public Parent CreationContenu(){
+        HBox ligneLettres = new HBox();
+        ligneLettres.setAlignment(Pos.CENTER);
+        lettres = ligneLettres.getChildren();
+        
+        
+    }
      
      
     
