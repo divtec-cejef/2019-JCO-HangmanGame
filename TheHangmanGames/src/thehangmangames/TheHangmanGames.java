@@ -5,6 +5,9 @@
  */
 package thehangmangames;
 
+import TheHangmanGames.LecteurMots;
+
+
 import java.util.HashMap;
 
 import javafx.animation.RotateTransition;
@@ -53,6 +56,22 @@ public class TheHangmanGames extends Application {
       
     //Score actuelle
      private SimpleIntegerProperty scoreActuel = new SimpleIntegerProperty();
+     
+     //Le jeu est-il jouable
+     private SimpleBooleanProperty jouable = new SimpleBooleanProperty();
+     
+     
+     private ObservableList<Node> lettres;
+     
+     
+    private final HashMap<Character, Text> alphabet = new HashMap<Character, Text>();
+    
+    private HangmanImage hangman = new HangmanImage();
+
+    private LecteurMots LecteurMot = new LecteurMots();
+    
+     
+     
     
     
      public void start(Stage primaryStage) {
