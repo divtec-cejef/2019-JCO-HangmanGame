@@ -43,7 +43,9 @@ import javafx.util.Duration;
 public class TheHangmanGames extends Application {
     private static final int APP_W = 900;
     private static final int APP_H = 500;
+    
     private static final Font DEFAULT_FONT = new Font("Courier", 36);
+    private static final float BONUS_MODIFIER = 0.2f;
     
     private static final int pointsLettre = 100;
     
@@ -55,6 +57,8 @@ public class TheHangmanGames extends Application {
       
     //Score actuelle
      private SimpleIntegerProperty scoreActuel = new SimpleIntegerProperty();
+     
+     private float scoreAModifier = 1.0f;
      
      //Le jeu est-il jouable
      private SimpleBooleanProperty jouable = new SimpleBooleanProperty();
@@ -75,7 +79,7 @@ public class TheHangmanGames extends Application {
         ligneLettres.setAlignment(Pos.CENTER);
         lettres = ligneLettres.getChildren();
         
-        jouable.bind(hangman.live.greaterThan(0).and(lettreADeviner.greaterThan(0)));
+        jouable.bind(hangman.coups.greaterThan(0).and(lettreADeviner.greaterThan(0)));
         jouable.addListener((obs, old, newValue) ->{
             if(!newValue.booleanValue())
                 arretJeu();
@@ -110,7 +114,7 @@ public class TheHangmanGames extends Application {
         ligneAlphabet.getChildren().add(tiret);
 
         Text texteScore = new Text();
-        texteScore.textProperty().bind(score.asString().concat(" Points"));
+        texteScore.textProperty().bind(scoreActuel.asString().concat(" Points"));
 
         HBox LignePendu = new HBox(10, btnRejouer, texteScore, hangman);
         LignePendu.setAlignment(Pos.CENTER);
@@ -129,7 +133,7 @@ public class TheHangmanGames extends Application {
     private void arretJeu(){
         for (Node n : lettres){
             Lettre lettre = (Lettre) n;
-            lettre.show();
+            lettre.montrer();
             
         }
     }
@@ -140,7 +144,7 @@ public class TheHangmanGames extends Application {
         }
         //Tirer le mot aléatoirement 
         hangman.reset();
-        mot.set(LecteurMots.MotsAleatoires().toUpperCase());
+        mot.set(LecteurMot.MotsAleatoires().toUpperCase());
         lettreADeviner.set(mot.length().get());
        
         lettres.clear();
@@ -154,20 +158,142 @@ public class TheHangmanGames extends Application {
         private static final int SPINE_END_X = SPINE_START_X;
         private static final int SPINE_END_Y = SPINE_START_Y + 50;
         
+        
+        //Trouver le nombre de coup qui restent
+        private SimpleIntegerProperty coups = new SimpleIntegerProperty();
+        public HangmanImage(){
+            Circle tete = new Circle(20);
+            tete.setTranslateX(SPINE_START_X);
 
+            Line corps = new Line();
+            corps.setStartX(SPINE_START_X);
+            corps.setStartY(SPINE_START_Y);
+            corps.setEndX(SPINE_END_X);
+            corps.setEndY(SPINE_END_Y);
+            
+            Line brasGauche = new Line();
+            brasGauche.setStartX(SPINE_START_X);
+            brasGauche.setStartY(SPINE_START_Y);
+            brasGauche.setEndX(SPINE_START_X + 40);
+            brasGauche.setEndY(SPINE_START_Y + 10);
+            
+            Line brasDroit = new Line();
+            brasDroit.setStartX(SPINE_START_X);
+            brasDroit.setStartY(SPINE_START_Y);
+            brasDroit.setEndX(SPINE_START_X - 40);
+            brasDroit.setEndY(SPINE_START_Y + 10);
+            
+            Line jambeGauche = new Line();
+            jambeGauche.setStartX(SPINE_END_X);
+            jambeGauche.setStartY(SPINE_END_Y);
+            jambeGauche.setEndX(SPINE_END_X + 25);
+            jambeGauche.setEndY(SPINE_END_Y + 50);
+
+            Line jambeDroite = new Line();
+            jambeDroite.setStartX(SPINE_END_X);
+            jambeDroite.setStartY(SPINE_END_Y);
+            jambeDroite.setEndX(SPINE_END_X - 25);
+            jambeDroite.setEndY(SPINE_END_Y + 50);
+            
+            getChildren().addAll(tete, corps, brasGauche, brasDroit, jambeGauche, jambeDroite);
+            coups.set(getChildren().size());          
+        }
         
-    
+        public void reset(){
+            getChildren().forEach(node -> node.setVisible(false));
+            coups.set(getChildren().size());
+        }
+
+        public void retirerVie() {
+            for (Node n : getChildren()) {
+                if (!n.isVisible()) {
+                    n.setVisible(true);
+                    coups.set(coups.get() - 1);
+                    break;
+                }
+            }
+        }
+    }
+    private static class Lettre extends StackPane {
+        private Rectangle rectangle = new Rectangle(40, 60);
+        private Text text;
+            
+        public Lettre(char lettre) {
+            rectangle.setFill(lettre == ' ' ? Color.DARKSEAGREEN : Color.WHITE);
+            rectangle.setStroke(Color.PINK);
+
+            text = new Text(String.valueOf(lettre).toUpperCase());
+            text.setFont(DEFAULT_FONT);
+            text.setVisible(false);
+
+            setAlignment(Pos.CENTER);
+            getChildren().addAll(rectangle, text);
+        }
+        public void montrer(){
+            RotateTransition rotationTransition = new RotateTransition(Duration.seconds(1), rectangle);
+            rotationTransition.setAxis(Rotate.Y_AXIS);
+            rotationTransition.setToAngle(180);
+            rotationTransition.setOnFinished(event -> text.setVisible(true));
+            rotationTransition.play(); 
+            }
+        public boolean estEgalA(char autre) {
+            return text.getText().equals(String.valueOf(autre).toUpperCase());
+        }
+    }
+    public void start(Stage primaryStage) throws Exception {
+        Scene scene = new Scene(CreationContenu());
+        scene.setOnKeyPressed((KeyEvent event) -> {
+            if (event.getText().isEmpty())
+                return;
+            
+            
+            char touchePressee = event.getText().toUpperCase().charAt(0);
+            if ((touchePressee < 'A' || touchePressee > 'Z') && touchePressee != '-')
+                return;
+            
+            if (jouable.get()) {
+                Text t = alphabet.get(touchePressee);
+                if (t.isStrikethrough())
+                    return;
+                
+                 // Noté que la lettre a été choisi
+                t.setFill(Color.RED);
+                t.setStrikethrough(true);
+                
+                boolean trouver = false;
+                
+                for (Node n : lettres){
+                    Lettre lettre = (Lettre) n;
+                    if(lettre.estEgalA(touchePressee)){
+                        trouver = true;
+                        scoreActuel.set(scoreActuel.get()+(int)(scoreAModifier  * pointsLettre));
+                        lettreADeviner.set(lettreADeviner.get()- 1);
+                        lettre.montrer();
+                    }
+                }
+                if(!trouver){
+                    hangman.retirerVie();
+                    scoreAModifier = 1.0f;
+                }
+                else{
+                    scoreAModifier+=BONUS_MODIFIER;
+                }
+            }
+        });
         
-       
-     
-     
-    
-    
-     public void start(Stage primaryStage) {
-         
-         
+         primaryStage.setResizable(false);
+        primaryStage.setWidth(APP_W);
+        primaryStage.setHeight(APP_H);
+        primaryStage.setTitle("Hangman");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        demarrageJeu();
+    }
+    public static void main(String[] args){
+        launch(args);
      }
 
      
      }
+
     

@@ -26,7 +26,7 @@ import javafx.stage.Stage;
  */
 public class Menu extends Application { 
     
-    Label choixDifficulte = new Label("Choix de la difficulté : None");
+  /*  Label choixDifficulte = new Label("Choix de la difficulté : None");
 
     public static void main(String[] args) {
         launch(args);
@@ -73,3 +73,4 @@ public class Menu extends Application {
     }
  
 }
+*/
