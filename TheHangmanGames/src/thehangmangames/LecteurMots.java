@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import javafx.scene.control.ToggleButton;
+import thehangmangames.TheHangmanGames;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -18,11 +18,7 @@ import javafx.scene.control.ToggleButton;
  */
 public class LecteurMots {
         
-    private static final String fichierMots = "/ListMots/motsFacile.txt";
-    
-    //Si le choix du menu est facile, moyen ou difficile, il faut choisir le bon
-    //fichier texte 
-
+    private static final String fichierMots = "/ListMots/mots.txt";
     
     //Création d'une  liste pour les mots
     private ArrayList<String> mots = new ArrayList<String>();

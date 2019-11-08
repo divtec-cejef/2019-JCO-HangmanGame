@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -26,7 +27,7 @@ import javafx.stage.Stage;
  */
 public class Menu extends Application { 
     
-   Label choixDifficulte = new Label("Choix de la difficulté : None");
+    Label choixDifficulte = new Label("Choix de la difficulté : None");
 
     public static void main(String[] args) {
         launch(args);
@@ -40,17 +41,6 @@ public class Menu extends Application {
         ToggleButton choixMoyen = new ToggleButton("Moyen");
         ToggleButton choixDifficile = new ToggleButton("Difficile");
         
-        //Création du champs de saisie
-        Label labelNom = new Label("Nom de la partie : ");
-        TextField nomPartie = new TextField();
-
-        
-        //Ajout d'un écouteur sur les boutons
-        
-
-        
-                
-        
         //Ajout dans un group
         ToggleGroup choixGroupe = new ToggleGroup();
         choixGroupe.getToggles().addAll(choixfacile, choixMoyen, choixDifficile);
@@ -61,7 +51,7 @@ public class Menu extends Application {
         //Création d'un nouveau label
         Label utilisateurDifficulte = new Label("Difficulté choisie :");
         
-        HBox boutonChoix = new HBox(choixfacile, choixMoyen, choixDifficile, nomPartie);
+        HBox boutonChoix = new HBox(choixfacile, choixMoyen, choixDifficile);
         boutonChoix.setSpacing(10);
         
         VBox root = new VBox(choixDifficulte,utilisateurDifficulte,boutonChoix);
@@ -72,13 +62,9 @@ public class Menu extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Jeu du pendue || Menu");
         primaryStage.show(); 
-        
-        //Champs de saisie pour que la partie est un nom
-        
     
     }
     
-    //La fonction écoute un listener pour savoir quel bouton a été appuyé pour changer le texte
     public void changed(ObservableValue<? extends Toggle> observable, Toggle oldBtn, Toggle newBtn){
         String selectedLabel = "None";
         if(newBtn != null){
@@ -86,12 +72,5 @@ public class Menu extends Application {
         }
         choixDifficulte.setText("Choix de la difficulté : "+ selectedLabel);
     }
-    //On retourne un String pour savoir ce que contient le bouton comme texte
-    //Afin de pouvoir l'utiliser dans le LecteurMots
-   /* public String typedeJeu(ObservableValue<? extends Toggle> observable, Toggle oldBtn, Toggle newBtn){
-        
-        
-        
-    }*/
  
 }

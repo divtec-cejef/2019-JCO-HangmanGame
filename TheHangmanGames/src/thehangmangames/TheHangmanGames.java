@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import javafx.animation.RotateTransition;
 import javafx.application.Application;
+import static javafx.application.Application.launch;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -295,5 +296,3 @@ public class TheHangmanGames extends Application {
 
      
      }
-
-    
