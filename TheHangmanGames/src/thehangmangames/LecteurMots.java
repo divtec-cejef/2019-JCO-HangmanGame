@@ -18,7 +18,7 @@ import thehangmangames.TheHangmanGames;
  */
 public class LecteurMots {
         
-    private static final String fichierMots = "/ListMots/mots.txt";
+    private static final String fichierMots = "/ListMots/motsFaciles.txt";
     
     //Création d'une  liste pour les mots
     private ArrayList<String> mots = new ArrayList<String>();
