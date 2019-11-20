@@ -16,7 +16,6 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -80,7 +79,7 @@ public class TheHangmanGames extends Application {
         HBox ligneLettres = new HBox();
  
         
-        ligneLettres.setAlignment(Pos.CENTER);
+        ligneLettres.setAlignment(Pos.TOP_CENTER);
         lettres = ligneLettres.getChildren();
         
         jouable.bind(hangman.coups.greaterThan(0).and(lettreADeviner.greaterThan(0)));
@@ -147,6 +146,8 @@ public class TheHangmanGames extends Application {
             
         }
     }
+    
+    
     private void demarrageJeu(){
         for (Text t : alphabet.values()) {
             t.setStrikethrough(false);
@@ -162,6 +163,8 @@ public class TheHangmanGames extends Application {
            lettres.add(new Lettre(c));
        }
     }
+    
+    
     private static class HangmanImage extends Parent {
         private static final int SPINE_START_X = 100;
         private static final int SPINE_START_Y = 20;
@@ -224,6 +227,8 @@ public class TheHangmanGames extends Application {
             }
         }
     }
+    
+    
     private static class Lettre extends StackPane {
         private Rectangle rectangle = new Rectangle(40, 60);
         private Text text;
@@ -295,7 +300,7 @@ public class TheHangmanGames extends Application {
          primaryStage.setResizable(false);
         primaryStage.setWidth(APP_W);
         primaryStage.setHeight(APP_H);
-        primaryStage.setTitle("Hangman");
+        primaryStage.setTitle("Jeu du pendu ");
         primaryStage.setScene(scene);
         primaryStage.show();
         demarrageJeu();
