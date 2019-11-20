@@ -16,6 +16,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -77,6 +78,8 @@ public class TheHangmanGames extends Application {
     
     public Parent CreationContenu(){
         HBox ligneLettres = new HBox();
+ 
+        
         ligneLettres.setAlignment(Pos.CENTER);
         lettres = ligneLettres.getChildren();
         
@@ -90,15 +93,15 @@ public class TheHangmanGames extends Application {
         btnRejouer.disableProperty().bind(jouable);
         btnRejouer.setOnAction(event -> demarrageJeu());
         
-        HBox ligne1 = new HBox();
-        HBox ligne3 = new HBox();
-        ligne1.setAlignment(Pos.CENTER);
-        ligne3.setAlignment(Pos.CENTER);
-        for (int i = 0 ; i < 20; i++) {
+        //HBox ligne1 = new HBox();
+        //HBox ligne3 = new HBox();
+        //ligne1.setAlignment(Pos.CENTER);
+        //ligne3.setAlignment(Pos.CENTER);
+        /*for (int i = 0 ; i < 20; i++) {
             ligne1.getChildren().add(new Lettre(' '));
             ligne3.getChildren().add(new Lettre(' '));
         }
-        
+        */
         HBox ligneAlphabet = new HBox(5);
         ligneAlphabet.setAlignment(Pos.CENTER);
         
@@ -122,11 +125,17 @@ public class TheHangmanGames extends Application {
 
         VBox vBox = new VBox(10);
         
-        // vertical layout
+        // Ajout élément graphique verticals
         vBox.getChildren().addAll(
-                ligne1,
+                
+                //ligne verte moche
+                //ligne1,
+                
                 ligneLettres,
-                ligne3,
+                
+                //ligne verte moche
+                //ligne3,
+                
                 ligneAlphabet,
                 LignePendu);
         return vBox;
@@ -221,6 +230,7 @@ public class TheHangmanGames extends Application {
             
         public Lettre(char lettre) {
             rectangle.setFill(lettre == ' ' ? Color.DARKSEAGREEN : Color.WHITE);
+            //Ligne de séparation de couleur ROSE
             rectangle.setStroke(Color.PINK);
 
             text = new Text(String.valueOf(lettre).toUpperCase());
