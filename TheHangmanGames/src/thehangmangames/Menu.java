@@ -24,7 +24,14 @@ import javafx.stage.Stage;
  *
  * @author mingsop
  */
-public class Menu extends Application { 
+public class Menu extends Application {
+    //Enumération pour la difficultés
+    public enum difficulté {
+    FACILE,
+    MOYEN,
+    DIFFICILE;	
+}
+    
     
     Label choixDifficulte = new Label("Choix de la difficulté : None");
 
