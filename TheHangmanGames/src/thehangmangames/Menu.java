@@ -10,6 +10,7 @@ import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.Toggle;
@@ -49,10 +50,23 @@ public class Menu extends Application {
         //Création d'un nouveau label
         Label utilisateurDifficulte = new Label("Difficulté choisie :");
         
+       //creation d'un label pour les indices
+        Label indicesLabel = new Label("Indices ?");
+        
+        //Création d'un checkbox pour les indices
+        CheckBox indices = new CheckBox();
+        
+        
+        //Création d'un ligne de composants des boutons
         HBox boutonChoix = new HBox(choixfacile, choixMoyen, choixDifficile);
         boutonChoix.setSpacing(10);
         
-        VBox root = new VBox(choixDifficulte,utilisateurDifficulte,boutonChoix);
+        //Création de la ligne de composant pour la checkbox
+        HBox indicesHB = new HBox(indices);
+        indicesHB.setSpacing(30);
+        
+        //Création d'une ligne verticale de composant
+        VBox root = new VBox(choixDifficulte,utilisateurDifficulte,boutonChoix,indicesHB,indicesLabel);
         root.setSpacing(10);
         root.setStyle("-fx-padding: 10;"+ "-fx-border-style:solid inside;"+"-fx-border-width: 2;"+"-fx-border-insets:5;"+"-fx-border-radius:5;"+"-fx-border-color: blue;");
         

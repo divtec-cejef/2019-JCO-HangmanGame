@@ -169,7 +169,9 @@ public class TheHangmanGames extends Application {
        }
     }
     
-    
+    /**
+     * Classe qui dessine le pendue
+     */
     private static class HangmanImage extends Parent {
         private static final int SPINE_START_X = 100;
         private static final int SPINE_START_Y = 20;
@@ -217,6 +219,9 @@ public class TheHangmanGames extends Application {
             coups.set(getChildren().size());          
         }
         
+        /**
+         * Reset le jeu
+         */
         public void reset(){
             getChildren().forEach(node -> node.setVisible(false));
             coups.set(getChildren().size());
