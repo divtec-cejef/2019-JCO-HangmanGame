@@ -20,8 +20,13 @@ public class LecteurMots {
         
     private static final String fichierMots = "/ListMots/motsFaciles.txt";
     
+    //Choisir la difficulté selon le choix du menu
+    
+    
     //Création d'une  liste pour les mots
     private ArrayList<String> mots = new ArrayList<String>();
+    
+    
 
    
    public LecteurMots() {

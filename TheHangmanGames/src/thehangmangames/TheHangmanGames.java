@@ -74,7 +74,7 @@ public class TheHangmanGames extends Application {
 
     private LecteurMots LecteurMot = new LecteurMots();
     
-    
+
     public Parent CreationContenu(){
         HBox ligneLettres = new HBox();
  
@@ -139,6 +139,9 @@ public class TheHangmanGames extends Application {
                 LignePendu);
         return vBox;
     }
+    /**
+     * Fonction qui décrit ce qui se passe à l'arrêt de jeu
+     */
     private void arretJeu(){
         for (Node n : lettres){
             Lettre lettre = (Lettre) n;
@@ -147,7 +150,9 @@ public class TheHangmanGames extends Application {
         }
     }
     
-    
+    /**
+     * Fonctionne qui décrit ce qui se passe au démarrage du jeu
+     */
     private void demarrageJeu(){
         for (Text t : alphabet.values()) {
             t.setStrikethrough(false);
@@ -232,7 +237,12 @@ public class TheHangmanGames extends Application {
     private static class Lettre extends StackPane {
         private Rectangle rectangle = new Rectangle(40, 60);
         private Text text;
-            
+        
+        
+        /**
+         * 
+         * @param lettre 
+         */    
         public Lettre(char lettre) {
             rectangle.setFill(lettre == ' ' ? Color.DARKSEAGREEN : Color.WHITE);
             //Ligne de séparation de couleur ROSE
@@ -245,6 +255,10 @@ public class TheHangmanGames extends Application {
             setAlignment(Pos.CENTER);
             getChildren().addAll(rectangle, text);
         }
+        
+        /**
+         * Méthode pour animer l'affichage de la lettre
+         */
         public void montrer(){
             RotateTransition rotationTransition = new RotateTransition(Duration.seconds(1), rectangle);
             rotationTransition.setAxis(Rotate.Y_AXIS);
@@ -252,6 +266,12 @@ public class TheHangmanGames extends Application {
             rotationTransition.setOnFinished(event -> text.setVisible(true));
             rotationTransition.play(); 
             }
+        
+        
+        /**
+         * @return On returne vrai ou faux si la lettre tappée est égale 
+         * à la lettre présente dans le mot
+         */
         public boolean estEgalA(char autre) {
             return text.getText().equals(String.valueOf(autre).toUpperCase());
         }
@@ -300,7 +320,7 @@ public class TheHangmanGames extends Application {
          primaryStage.setResizable(false);
         primaryStage.setWidth(APP_W);
         primaryStage.setHeight(APP_H);
-        primaryStage.setTitle("Jeu du pendu ");
+        primaryStage.setTitle("Jeu du pendue || Jeu");
         primaryStage.setScene(scene);
         primaryStage.show();
         demarrageJeu();
