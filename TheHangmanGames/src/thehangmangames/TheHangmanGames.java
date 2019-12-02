@@ -74,6 +74,8 @@ public class TheHangmanGames extends Application {
 
     private LecteurMots LecteurMot = new LecteurMots();
     
+    private Menu Menu = new Menu();
+    
 
     public Parent CreationContenu(){
         HBox ligneLettres = new HBox();
@@ -92,15 +94,6 @@ public class TheHangmanGames extends Application {
         btnRejouer.disableProperty().bind(jouable);
         btnRejouer.setOnAction(event -> demarrageJeu());
         
-        //HBox ligne1 = new HBox();
-        //HBox ligne3 = new HBox();
-        //ligne1.setAlignment(Pos.CENTER);
-        //ligne3.setAlignment(Pos.CENTER);
-        /*for (int i = 0 ; i < 20; i++) {
-            ligne1.getChildren().add(new Lettre(' '));
-            ligne3.getChildren().add(new Lettre(' '));
-        }
-        */
         HBox ligneAlphabet = new HBox(5);
         ligneAlphabet.setAlignment(Pos.CENTER);
         
@@ -126,15 +119,8 @@ public class TheHangmanGames extends Application {
         
         // Ajout élément graphique verticals
         vBox.getChildren().addAll(
-                
-                //ligne verte moche
-                //ligne1,
-                
+
                 ligneLettres,
-                
-                //ligne verte moche
-                //ligne3,
-                
                 ligneAlphabet,
                 LignePendu);
         return vBox;
@@ -237,7 +223,6 @@ public class TheHangmanGames extends Application {
             }
         }
     }
-    
     
     private static class Lettre extends StackPane {
         private Rectangle rectangle = new Rectangle(40, 60);

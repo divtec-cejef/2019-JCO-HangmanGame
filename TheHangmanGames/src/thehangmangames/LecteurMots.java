@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import thehangmangames.TheHangmanGames;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -18,15 +17,13 @@ import thehangmangames.TheHangmanGames;
  */
 public class LecteurMots {
         
-    private static final String fichierMots = "/ListMots/motsFaciles.txt";
+    private static final String fichierMots = "/ListMots/fr_MotsFaciles.txt";
     
     //Choisir la difficulté selon le choix du menu
     
     
     //Création d'une  liste pour les mots
     private ArrayList<String> mots = new ArrayList<String>();
-    
-    
 
    
    public LecteurMots() {
@@ -54,4 +51,7 @@ public class LecteurMots {
         if (mots.isEmpty()) return "Aucunes données";
         return mots.get((int)(Math.random()*mots.size()));
     }
+    
+   //methode pour les boutons choix difficultés
+   
 }
