@@ -9,6 +9,8 @@ package thehangmangames;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -26,55 +28,39 @@ import javafx.stage.Stage;
  *
  * @author mingsop
  */
-public class Menu extends Application {
-    /* enum Difficulte{
-         DIFFICULTE_1,
-         DIFFICULTE_2,
-         DIFFICULTE_3;
-         
-         private String description;
-     }
-    */
+public class Menu extends Application{
+       
+    //Création d'un checkbox pour les indices
+    CheckBox indices = new CheckBox("Oui je les veux !");
+    //Création un groupe
+    final ToggleGroup languesGroupe = new ToggleGroup();
     
-    Label choixDifficulte = new Label("Choix de la difficulté : None");
-
+    //Creation des boutons Francais
+    //fr_ -> français
+    ToggleButton choixfacile = new ToggleButton("Facile");
+    ToggleButton choixMoyen = new ToggleButton("Moyen");
+    ToggleButton choixDifficile = new ToggleButton("Difficile");
+    
     public static void main(String[] args) {
         launch(args);
     }
  
     public void start(Stage primaryStage) { 
-
-        //Creation des boutons Francais
-        //fr_ -> français
-        ToggleButton choixfacile = new ToggleButton("Facile");
-        ToggleButton choixMoyen = new ToggleButton("Moyen");
-        ToggleButton choixDifficile = new ToggleButton("Difficile");
-              
         //Création du bouton pour commencé le jeu
-        Button btn_DemarrageJeu = new Button("Jouons !"); 
+        Button btn_DemarrageJeu = new Button();
+        btn_DemarrageJeu.setText("Jouons !");
         
         //Ajout dans un groupe pour le groupe français
         ToggleGroup choixGroupe = new ToggleGroup();
         choixGroupe.getToggles().addAll(choixfacile, choixMoyen, choixDifficile);
-        
-        //Ajout d'un "écouteur" pour changer le texte de difficulté
-        choixGroupe.selectedToggleProperty().addListener(this::changed);
-        
-        //Ajout d'un "écouteur" pour les fichiers textes
-        choixGroupe.selectedToggleProperty().addListener(this::chargementFichierTexte);
-        
-        
+ 
         //Création d'un nouveau label
         Label utilisateurDifficulte = new Label("Difficulté choisie :");
-        
-       //creation d'un label pour les indices
-        Label indicesLabel = new Label("Voulez-vous des indices ?");
         
         //Creation d'un label pour les langues
         Label languesLabel = new Label ("Choix de la langue : ");
         
-        //Création d'un radioButton
-        final ToggleGroup languesGroupe = new ToggleGroup();
+        //Création d'un radioButton      
         RadioButton langueFrancais = new RadioButton("Français");
         RadioButton langueAnglais = new RadioButton("Anglais");
         
@@ -82,8 +68,19 @@ public class Menu extends Application {
         langueFrancais.setToggleGroup(languesGroupe);
         langueAnglais.setToggleGroup(languesGroupe);
         
-        //Création d'un checkbox pour les indices
-        CheckBox indices = new CheckBox("Oui je les veux !");
+       //creation d'un label pour les indices
+        Label indicesLabel = new Label("Voulez-vous des indices ?");
+             
+    
+
+        //Lorsque le bouton est appuyé on lance le jeu 
+        btn_DemarrageJeu.setOnAction(new EventHandler<ActionEvent>() {
+            @Override 
+            public void handle(ActionEvent e) {
+                 Application.launch(TheHangmanGames.class);
+                
+            }
+        });
         
         //Création d'un ligne de composants des boutons Français
         HBox boutonChoix = new HBox(choixfacile, choixMoyen, choixDifficile);
@@ -98,7 +95,7 @@ public class Menu extends Application {
         langueHB.setSpacing(30);
         
         //Création d'une ligne verticale de composant
-        VBox root = new VBox(choixDifficulte,utilisateurDifficulte,boutonChoix,indicesLabel,indicesHB,languesLabel,langueHB);
+        VBox root = new VBox(languesLabel,langueHB,utilisateurDifficulte,boutonChoix,indicesLabel,indicesHB,btn_DemarrageJeu);
         root.setSpacing(10);
         root.setStyle("-fx-padding: 10;"+ "-fx-border-style:solid inside;"+"-fx-border-width: 2;"+"-fx-border-insets:5;");
         
@@ -108,24 +105,34 @@ public class Menu extends Application {
         primaryStage.show(); 
     
     }
-    
-    public void changed(ObservableValue<? extends Toggle> observable, Toggle oldBtn, Toggle newBtn){
-        //changer nom variable
-        String selectedLabel = "None";
-        if(newBtn != null){
-            selectedLabel = ((Labeled)newBtn).getText();
+    public String choixFichierTexte(){
+        String fichierLanguesDifficultes;
+        if(languesGroupe.toString() == "Anglais"){
+            if (choixfacile.isSelected() == true){
+                    return fichierLanguesDifficultes = "/ListMots/an_WordsEasy";
+                               
+                
+            }else if(choixMoyen.isSelected() == true){
+                
+                return fichierLanguesDifficultes = "/ListMots/an_WordsMedium";
+            }else{
+                return fichierLanguesDifficultes = "/ListMots/an_WordHard";
+            }
+        }else if(languesGroupe.toString() == "Français"){
+            if (choixfacile.isSelected() == true){
+                    return fichierLanguesDifficultes = "/ListMots/fr_MotsFaciles";
+            
+        }else if(choixMoyen.isSelected() == true){
+            return fichierLanguesDifficultes = "/ListMots/fr_MotsMoyens";
+        }else{
+            return fichierLanguesDifficultes = "/ListMots/fr_MotsDifficiles";
         }
-        choixDifficulte.setText("Choix de la difficulté : "+ selectedLabel);
+            
+            
+        }
+        return fichierLanguesDifficultes = "";
     }
-    /**
-     * La fonctionne permet de savoir l'index des bouton afin que dans la classe LecteurMots
-     * afin de pouvoir choisir le bon fichier texte
-     * @return l'index du bouton appuyé
-     */
-    public int chargementFichierTexte(ObservableValue<? extends Toggle> observable, Toggle oldBtn, Toggle newBtn){
-        int indexBouton = 0;
-        return indexBouton;
-    }
-    
-    
- }
+        
+}
+            
+           

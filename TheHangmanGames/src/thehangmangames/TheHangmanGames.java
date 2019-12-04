@@ -155,6 +155,7 @@ public class TheHangmanGames extends Application {
        }
     }
     
+    
     /**
      * Classe qui dessine le pendue
      */
@@ -223,6 +224,7 @@ public class TheHangmanGames extends Application {
             }
         }
     }
+
     
     private static class Lettre extends StackPane {
         private Rectangle rectangle = new Rectangle(40, 60);

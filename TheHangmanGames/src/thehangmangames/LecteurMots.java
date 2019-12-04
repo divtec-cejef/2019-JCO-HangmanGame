@@ -20,7 +20,8 @@ public class LecteurMots {
     private static final String fichierMots = "/ListMots/fr_MotsFaciles.txt";
     
     //Choisir la difficulté selon le choix du menu
-    
+    Menu.choixFichierTexte();
+
     
     //Création d'une  liste pour les mots
     private ArrayList<String> mots = new ArrayList<String>();
@@ -52,6 +53,7 @@ public class LecteurMots {
         return mots.get((int)(Math.random()*mots.size()));
     }
     
-   //methode pour les boutons choix difficultés
+
+    
    
 }
