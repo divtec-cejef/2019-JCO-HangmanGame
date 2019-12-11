@@ -5,12 +5,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author mingsop
@@ -20,8 +14,12 @@ public class LecteurMots {
     private static final String fichierMots = "/ListMots/fr_MotsFaciles.txt";
     
     //Choisir la difficulté selon le choix du menu
-    Menu.choixFichierTexte();
-
+    //On appelle la fonction  choixFichierTexte() qui se trouve dans la classe Menu
+   /* public String cheminFichier(){
+        Menu menu = new Menu();
+        menu.choixFichierTexte(fichierMots);
+        return fichierMots;
+    }*/ 
     
     //Création d'une  liste pour les mots
     private ArrayList<String> mots = new ArrayList<String>();
@@ -52,6 +50,8 @@ public class LecteurMots {
         if (mots.isEmpty()) return "Aucunes données";
         return mots.get((int)(Math.random()*mots.size()));
     }
+    
+    
     
 
     

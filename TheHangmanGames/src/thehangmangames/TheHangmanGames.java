@@ -32,6 +32,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -68,6 +69,8 @@ public class TheHangmanGames extends Application {
      private ObservableList<Node> lettres;
      
      
+     
+     
     private final HashMap<Character, Text> alphabet = new HashMap<Character, Text>();
     
     private HangmanImage hangman = new HangmanImage();
@@ -79,8 +82,6 @@ public class TheHangmanGames extends Application {
 
     public Parent CreationContenu(){
         HBox ligneLettres = new HBox();
- 
-        
         ligneLettres.setAlignment(Pos.TOP_CENTER);
         lettres = ligneLettres.getChildren();
         
@@ -259,7 +260,6 @@ public class TheHangmanGames extends Application {
             rotationTransition.play(); 
             }
         
-        
         /**
          * @return On returne vrai ou faux si la lettre tappée est égale 
          * à la lettre présente dans le mot
@@ -268,12 +268,36 @@ public class TheHangmanGames extends Application {
             return text.getText().equals(String.valueOf(autre).toUpperCase());
         }
     }
+    
     public void start(Stage primaryStage) throws Exception {
+        
         Scene scene = new Scene(CreationContenu());
+        
+        //Scène du menu avec une modal window
+        StackPane secondaryLayout = new StackPane();
+        Scene menuScene = new Scene(secondaryLayout, 230,100);
+        
+        // New window (Stage)
+        Stage menuFenetre = new Stage();
+        menuFenetre.setTitle("Menu");
+        menuFenetre.setScene(menuScene);
+        // Specifies the modality for new window.
+        menuFenetre.initModality(Modality.WINDOW_MODAL);
+ 
+        // Specifies the owner Window (parent) for new window
+        menuFenetre.initOwner(primaryStage);
+ 
+        // Set position of second window, related to primary window.
+        menuFenetre.setX(primaryStage.getX() + 200);
+        menuFenetre.setY(primaryStage.getY() + 100);
+ 
+        menuFenetre.show();
+        
+        
         scene.setOnKeyPressed((KeyEvent event) -> {
-            if (event.getText().isEmpty())
-                return;
             
+            if (event.getText().isEmpty())
+                return;        
             
             char touchePressee = event.getText().toUpperCase().charAt(0);
             if ((touchePressee < 'A' || touchePressee > 'Z') && touchePressee != '-')
@@ -309,7 +333,9 @@ public class TheHangmanGames extends Application {
             }
         });
         
-         primaryStage.setResizable(false);
+        
+        
+        primaryStage.setResizable(false);
         primaryStage.setWidth(APP_W);
         primaryStage.setHeight(APP_H);
         primaryStage.setTitle("Jeu du pendue || Jeu");
@@ -317,6 +343,7 @@ public class TheHangmanGames extends Application {
         primaryStage.show();
         demarrageJeu();
     }
+    
     public static void main(String[] args){
         launch(args);
      }

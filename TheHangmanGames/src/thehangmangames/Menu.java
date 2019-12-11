@@ -105,32 +105,31 @@ public class Menu extends Application{
         primaryStage.show(); 
     
     }
-    public String choixFichierTexte(){
-        String fichierLanguesDifficultes;
+    public String choixFichierTexte(String nomfichier){
         if(languesGroupe.toString() == "Anglais"){
             if (choixfacile.isSelected() == true){
-                    return fichierLanguesDifficultes = "/ListMots/an_WordsEasy";
+                    return nomfichier = "/ListMots/an_WordsEasy";
                                
                 
             }else if(choixMoyen.isSelected() == true){
                 
-                return fichierLanguesDifficultes = "/ListMots/an_WordsMedium";
+                return nomfichier = "/ListMots/an_WordsMedium";
             }else{
-                return fichierLanguesDifficultes = "/ListMots/an_WordHard";
+                return nomfichier = "/ListMots/an_WordHard";
             }
         }else if(languesGroupe.toString() == "Français"){
             if (choixfacile.isSelected() == true){
-                    return fichierLanguesDifficultes = "/ListMots/fr_MotsFaciles";
+                    return nomfichier = "/ListMots/fr_MotsFaciles";
             
         }else if(choixMoyen.isSelected() == true){
-            return fichierLanguesDifficultes = "/ListMots/fr_MotsMoyens";
+            return nomfichier = "/ListMots/fr_MotsMoyens";
         }else{
-            return fichierLanguesDifficultes = "/ListMots/fr_MotsDifficiles";
+            return nomfichier = "/ListMots/fr_MotsDifficiles";
         }
             
             
         }
-        return fichierLanguesDifficultes = "";
+        return nomfichier = "";
     }
         
 }
