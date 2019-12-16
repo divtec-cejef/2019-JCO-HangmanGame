@@ -31,14 +31,14 @@ import javafx.stage.Stage;
 public class Menu extends Application{
        
     //Création d'un checkbox pour les indices
-    CheckBox indices = new CheckBox("Oui je les veux !");
+    CheckBox CB_indices = new CheckBox("Oui je les veux !");
     //Création un groupe
     final ToggleGroup languesGroupe = new ToggleGroup();
     
     //Creation des boutons Francais
     //fr_ -> français
-    ToggleButton choixfacile = new ToggleButton("Facile");
-    ToggleButton choixDifficile = new ToggleButton("Difficile");
+    ToggleButton TB_choixfacile = new ToggleButton("Facile");
+    ToggleButton TB_choixDifficile = new ToggleButton("Difficile");
     
     public static void main(String[] args) {
         launch(args);
@@ -46,34 +46,34 @@ public class Menu extends Application{
  
     public void start(Stage primaryStage) { 
         //Création du bouton pour commencé le jeu
-        Button btn_DemarrageJeu = new Button();
-        btn_DemarrageJeu.setText("Jouons !");
+        Button BTN_DemarrageJeu = new Button();
+        BTN_DemarrageJeu.setText("Jouons !");
         
         //Ajout dans un groupe pour le groupe français
-        ToggleGroup choixGroupe = new ToggleGroup();
-        choixGroupe.getToggles().addAll(choixfacile, choixMoyen, choixDifficile);
+        ToggleGroup TG_choixGroupe = new ToggleGroup();
+        TG_choixGroupe.getToggles().addAll(TB_choixfacile, TB_choixDifficile);
  
         //Création d'un nouveau label
-        Label utilisateurDifficulte = new Label("Difficulté choisie :");
+        Label LB_utilisateurDifficulte = new Label("Difficulté choisie :");
         
         //Creation d'un label pour les langues
-        Label languesLabel = new Label ("Choix de la langue : ");
+        Label LB_languesLabel = new Label ("Choix de la langue : ");
         
         //Création d'un radioButton      
-        RadioButton langueFrancais = new RadioButton("Français");
-        RadioButton langueAnglais = new RadioButton("Anglais");
+        RadioButton RB_langueFrancais = new RadioButton("Français");
+        RadioButton RB_langueAnglais = new RadioButton("Anglais");
         
         //Ajout d'un groupe
-        langueFrancais.setToggleGroup(languesGroupe);
-        langueAnglais.setToggleGroup(languesGroupe);
+        RB_langueFrancais.setToggleGroup(languesGroupe);
+        RB_langueAnglais.setToggleGroup(languesGroupe);
         
        //creation d'un label pour les indices
-        Label indicesLabel = new Label("Voulez-vous des indices ?");
+        Label LB_indices = new Label("Voulez-vous des indices ?");
              
     
 
         //Lorsque le bouton est appuyé on lance le jeu 
-        btn_DemarrageJeu.setOnAction(new EventHandler<ActionEvent>() {
+        BTN_DemarrageJeu.setOnAction(new EventHandler<ActionEvent>() {
             @Override 
             public void handle(ActionEvent e) {
                  Application.launch(TheHangmanGames.class);
@@ -82,19 +82,19 @@ public class Menu extends Application{
         });
         
         //Création d'un ligne de composants des boutons Français
-        HBox boutonChoix = new HBox(choixfacile, choixDifficile);
-        boutonChoix.setSpacing(10);     
+        HBox HB_boutonChoix = new HBox(TB_choixfacile, TB_choixDifficile);
+        HB_boutonChoix.setSpacing(10);     
         
         //Création de la ligne de composant pour la checkbox
-        HBox indicesHB = new HBox(indices);
-        indicesHB.setSpacing(30);
+        HBox HB_indices = new HBox(CB_indices);
+        HB_indices.setSpacing(30);
         
         //Création de la ligne de composant pour les radios Buttons
-        HBox langueHB = new HBox(langueFrancais, langueAnglais);
+        HBox langueHB = new HBox(RB_langueFrancais, RB_langueAnglais);
         langueHB.setSpacing(30);
         
         //Création d'une ligne verticale de composant
-        VBox root = new VBox(languesLabel,langueHB,utilisateurDifficulte,boutonChoix,indicesLabel,indicesHB,btn_DemarrageJeu);
+        VBox root = new VBox(LB_languesLabel,langueHB,LB_utilisateurDifficulte,HB_boutonChoix,LB_indices,HB_indices,BTN_DemarrageJeu);
         root.setSpacing(10);
         root.setStyle("-fx-padding: 10;"+ "-fx-border-style:solid inside;"+"-fx-border-width: 2;"+"-fx-border-insets:5;");
         
@@ -106,13 +106,13 @@ public class Menu extends Application{
     }
     public String choixFichierTexte(String nomfichier){
         if(languesGroupe.toString() == "Anglais"){
-            if (choixfacile.isSelected() == true){
+            if (TB_choixfacile.isSelected() == true){
                     return nomfichier = "/ListMots/an_WordsEasy";
             }else{
                 return nomfichier = "/ListMots/an_WordHard";
             }
         }else if(languesGroupe.toString() == "Français"){
-            if (choixfacile.isSelected() == true){
+            if (TB_choixfacile.isSelected() == true){
                     return nomfichier = "/ListMots/fr_MotsFaciles";
         }else{
             return nomfichier = "/ListMots/fr_MotsDifficiles";
