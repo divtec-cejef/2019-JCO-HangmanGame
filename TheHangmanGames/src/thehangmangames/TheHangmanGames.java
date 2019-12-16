@@ -16,6 +16,8 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -70,6 +72,8 @@ public class TheHangmanGames extends Application {
      //Le jeu est-il jouable
      private SimpleBooleanProperty jouable = new SimpleBooleanProperty();
      
+     //Instancier la fenêtre "modal"
+     testModalWindows FenetreModal = new testModalWindows();
      
      private ObservableList<Node> lettres;
      
@@ -81,9 +85,6 @@ public class TheHangmanGames extends Application {
     private HangmanImage hangman = new HangmanImage();
 
     private LecteurMots LecteurMot = new LecteurMots();
-    
-    private Menu Menu = new Menu();
-    
 
     public Parent CreationContenu(){
         HBox ligneLettres = new HBox();
@@ -146,6 +147,8 @@ public class TheHangmanGames extends Application {
      * Fonctionne qui décrit ce qui se passe au démarrage du jeu
      */
     private void demarrageJeu(){
+        
+        
         for (Text t : alphabet.values()) {
             t.setStrikethrough(false);
             t.setFill(Color.BLACK);
@@ -158,9 +161,11 @@ public class TheHangmanGames extends Application {
         lettres.clear();
        for (char c : mot.get().toCharArray()){
            lettres.add(new Lettre(c));
+           
+           
        }
+       
     }
-    
     
     /**
      * Classe qui dessine le pendue
@@ -349,64 +354,11 @@ public class TheHangmanGames extends Application {
         demarrageJeu();
     }
     
-    private void ContenueMenu(){
-          //Création d'un checkbox pour les indices
-        CheckBox indices = new CheckBox("Oui je les veux !");
-        //Création un groupe
-        final ToggleGroup languesGroupe = new ToggleGroup();
-
-        //Creation des boutons Francais
-        //fr_ -> français
-        ToggleButton choixfacile = new ToggleButton("Facile");
-        ToggleButton choixMoyen = new ToggleButton("Moyen");
-        ToggleButton choixDifficile = new ToggleButton("Difficile");
-        //Création du bouton pour commencé le jeu
-        Button btn_DemarrageJeu = new Button();
-        btn_DemarrageJeu.setText("Jouons !");
-        
-        //Ajout dans un groupe pour le groupe français
-        ToggleGroup choixGroupe = new ToggleGroup();
-        choixGroupe.getToggles().addAll(choixfacile, choixMoyen, choixDifficile);
- 
-        //Création d'un nouveau label
-        Label utilisateurDifficulte = new Label("Difficulté choisie :");
-        
-        //Creation d'un label pour les langues
-        Label languesLabel = new Label ("Choix de la langue : ");
-        
-        //Création d'un radioButton      
-        RadioButton langueFrancais = new RadioButton("Français");
-        RadioButton langueAnglais = new RadioButton("Anglais");
-        
-        //Ajout d'un groupe
-        langueFrancais.setToggleGroup(languesGroupe);
-        langueAnglais.setToggleGroup(languesGroupe);
-        
-       //creation d'un label pour les indices
-        Label indicesLabel = new Label("Voulez-vous des indices ?");
-         
-        //Création d'un ligne de composants des boutons Français
-        HBox boutonChoix = new HBox(choixfacile, choixMoyen, choixDifficile);
-        boutonChoix.setSpacing(10);     
-        
-        //Création de la ligne de composant pour la checkbox
-        HBox indicesHB = new HBox(indices);
-        indicesHB.setSpacing(30);
-        
-        //Création de la ligne de composant pour les radios Buttons
-        HBox langueHB = new HBox(langueFrancais, langueAnglais);
-        langueHB.setSpacing(30);
-        
-        //Création d'une ligne verticale de composant
-        VBox root = new VBox(languesLabel,langueHB,utilisateurDifficulte,boutonChoix,indicesLabel,indicesHB,btn_DemarrageJeu);
-        root.setSpacing(10);
-
-        
-}
-    
     public static void main(String[] args){
         launch(args);
-     }
+     } 
+}
+   
 
      
-     }
+     
