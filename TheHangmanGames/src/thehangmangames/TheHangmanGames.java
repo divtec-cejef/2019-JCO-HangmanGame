@@ -21,6 +21,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -290,7 +295,7 @@ public class TheHangmanGames extends Application {
         // Set position of second window, related to primary window.
         menuFenetre.setX(primaryStage.getX() + 200);
         menuFenetre.setY(primaryStage.getY() + 100);
- 
+
         menuFenetre.show();
         
         
@@ -343,6 +348,61 @@ public class TheHangmanGames extends Application {
         primaryStage.show();
         demarrageJeu();
     }
+    
+    private void ContenueMenu(){
+          //Création d'un checkbox pour les indices
+        CheckBox indices = new CheckBox("Oui je les veux !");
+        //Création un groupe
+        final ToggleGroup languesGroupe = new ToggleGroup();
+
+        //Creation des boutons Francais
+        //fr_ -> français
+        ToggleButton choixfacile = new ToggleButton("Facile");
+        ToggleButton choixMoyen = new ToggleButton("Moyen");
+        ToggleButton choixDifficile = new ToggleButton("Difficile");
+        //Création du bouton pour commencé le jeu
+        Button btn_DemarrageJeu = new Button();
+        btn_DemarrageJeu.setText("Jouons !");
+        
+        //Ajout dans un groupe pour le groupe français
+        ToggleGroup choixGroupe = new ToggleGroup();
+        choixGroupe.getToggles().addAll(choixfacile, choixMoyen, choixDifficile);
+ 
+        //Création d'un nouveau label
+        Label utilisateurDifficulte = new Label("Difficulté choisie :");
+        
+        //Creation d'un label pour les langues
+        Label languesLabel = new Label ("Choix de la langue : ");
+        
+        //Création d'un radioButton      
+        RadioButton langueFrancais = new RadioButton("Français");
+        RadioButton langueAnglais = new RadioButton("Anglais");
+        
+        //Ajout d'un groupe
+        langueFrancais.setToggleGroup(languesGroupe);
+        langueAnglais.setToggleGroup(languesGroupe);
+        
+       //creation d'un label pour les indices
+        Label indicesLabel = new Label("Voulez-vous des indices ?");
+         
+        //Création d'un ligne de composants des boutons Français
+        HBox boutonChoix = new HBox(choixfacile, choixMoyen, choixDifficile);
+        boutonChoix.setSpacing(10);     
+        
+        //Création de la ligne de composant pour la checkbox
+        HBox indicesHB = new HBox(indices);
+        indicesHB.setSpacing(30);
+        
+        //Création de la ligne de composant pour les radios Buttons
+        HBox langueHB = new HBox(langueFrancais, langueAnglais);
+        langueHB.setSpacing(30);
+        
+        //Création d'une ligne verticale de composant
+        VBox root = new VBox(languesLabel,langueHB,utilisateurDifficulte,boutonChoix,indicesLabel,indicesHB,btn_DemarrageJeu);
+        root.setSpacing(10);
+
+        
+}
     
     public static void main(String[] args){
         launch(args);

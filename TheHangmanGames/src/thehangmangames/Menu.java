@@ -38,7 +38,6 @@ public class Menu extends Application{
     //Creation des boutons Francais
     //fr_ -> français
     ToggleButton choixfacile = new ToggleButton("Facile");
-    ToggleButton choixMoyen = new ToggleButton("Moyen");
     ToggleButton choixDifficile = new ToggleButton("Difficile");
     
     public static void main(String[] args) {
@@ -83,7 +82,7 @@ public class Menu extends Application{
         });
         
         //Création d'un ligne de composants des boutons Français
-        HBox boutonChoix = new HBox(choixfacile, choixMoyen, choixDifficile);
+        HBox boutonChoix = new HBox(choixfacile, choixDifficile);
         boutonChoix.setSpacing(10);     
         
         //Création de la ligne de composant pour la checkbox
@@ -109,25 +108,15 @@ public class Menu extends Application{
         if(languesGroupe.toString() == "Anglais"){
             if (choixfacile.isSelected() == true){
                     return nomfichier = "/ListMots/an_WordsEasy";
-                               
-                
-            }else if(choixMoyen.isSelected() == true){
-                
-                return nomfichier = "/ListMots/an_WordsMedium";
             }else{
                 return nomfichier = "/ListMots/an_WordHard";
             }
         }else if(languesGroupe.toString() == "Français"){
             if (choixfacile.isSelected() == true){
                     return nomfichier = "/ListMots/fr_MotsFaciles";
-            
-        }else if(choixMoyen.isSelected() == true){
-            return nomfichier = "/ListMots/fr_MotsMoyens";
         }else{
             return nomfichier = "/ListMots/fr_MotsDifficiles";
-        }
-            
-            
+        } 
         }
         return nomfichier = "";
     }
