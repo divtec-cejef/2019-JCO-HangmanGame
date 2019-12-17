@@ -6,8 +6,8 @@
 package thehangmangames;
 
 
-
 import java.util.HashMap;
+import java.util.HashSet;
 
 import javafx.animation.RotateTransition;
 import javafx.application.Application;
@@ -17,7 +17,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -30,6 +30,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -50,34 +51,31 @@ import javafx.util.Duration;
  * @author mingsop
  */
 public class TheHangmanGames extends Application {
-    private static final int APP_W = 900;
-    private static final int APP_H = 500;
+    private static final int TAILLE_APP_LARGEUR = 900;
+    private static final int TAILLE_APP_HAUTEUR = 500;
     
     private static final Font DEFAULT_FONT = new Font("Courier", 36);
     private static final float BONUS_MODIFIER = 0.2f;
     
-    private static final int pointsLettre = 100;
+    private static final int POINT_LETTRE = 100;
     
     //Mot à deviner
-    private SimpleStringProperty mot = new SimpleStringProperty();
+    private SimpleStringProperty motADeviner = new SimpleStringProperty();
     
     //Nombre de lettre à deviner
     private SimpleIntegerProperty lettreADeviner = new SimpleIntegerProperty();
       
     //Score actuelle
-     private SimpleIntegerProperty scoreActuel = new SimpleIntegerProperty();
+    private SimpleIntegerProperty scoreActuel = new SimpleIntegerProperty();
      
-     private float scoreAModifier = 1.0f;
+    private float scoreAModifier = 1.0f;
      
      //Le jeu est-il jouable
-     private SimpleBooleanProperty jouable = new SimpleBooleanProperty();
-     
-     //Instancier la fenêtre "modal"
-     testModalWindows FenetreModal = new testModalWindows();
-     
-     private ObservableList<Node> lettres;
+    private SimpleBooleanProperty jouable = new SimpleBooleanProperty();
      
      
+     
+    private ObservableList<Node> lettres;
      
      
     private final HashMap<Character, Text> alphabet = new HashMap<Character, Text>();
@@ -85,53 +83,68 @@ public class TheHangmanGames extends Application {
     private HangmanImage hangman = new HangmanImage();
 
     private LecteurMot LecteurMot = new LecteurMot();
+      
+    
+    
 
     public Parent CreationContenu(){
-        HBox ligneLettres = new HBox();
-        ligneLettres.setAlignment(Pos.TOP_CENTER);
-        lettres = ligneLettres.getChildren();
+        
+        HBox HB_ligneLettres = new HBox();
+        HB_ligneLettres.setAlignment(Pos.TOP_CENTER);
+        lettres = HB_ligneLettres.getChildren();
         
         jouable.bind(hangman.coups.greaterThan(0).and(lettreADeviner.greaterThan(0)));
-        jouable.addListener((obs, old, newValue) ->{
-            if(!newValue.booleanValue())
+        jouable.addListener((obs, old, nouvelleValeur) ->{
+            if(!nouvelleValeur.booleanValue())
                 arretJeu();
         });
         
-        Button btnRejouer = new Button("Nouvelle partie !");
-        btnRejouer.disableProperty().bind(jouable);
-        btnRejouer.setOnAction(event -> demarrageJeu());
+        Button BTN_Rejouer = new Button("Nouvelle partie !");
+        BTN_Rejouer.disableProperty().bind(jouable);
+        BTN_Rejouer.setOnAction(event -> demarrageJeu());
         
-        HBox ligneAlphabet = new HBox(5);
-        ligneAlphabet.setAlignment(Pos.CENTER);
+        Pane root = new Pane();
+        Button BTN_Réglages = new Button("Réglages");
+        BTN_Réglages.setOnAction(event->FenetreModal.nouvelleFenetre("Menu|| Jeu du pendu"));
+        
+        root.getChildren().add(BTN_Réglages);
+        Scene scèneMenu = new Scene(root, 300,300);
+
+        
+        
+        
+        HBox HB_ligneAlphabet = new HBox(5);
+        HB_ligneAlphabet.setAlignment(Pos.CENTER);
         
         for (char c = 'A'; c <= 'Z'; c++) {
             Text t = new Text(String.valueOf(c));
             t.setFont(DEFAULT_FONT);
             alphabet.put(c, t);
-            ligneAlphabet.getChildren().add(t);
+            HB_ligneAlphabet.getChildren().add(t);
         }
 
         Text tiret = new Text("-");
         tiret.setFont(DEFAULT_FONT);
         alphabet.put('-', tiret);
-        ligneAlphabet.getChildren().add(tiret);
+        HB_ligneAlphabet.getChildren().add(tiret);
 
         Text texteScore = new Text();
         texteScore.textProperty().bind(scoreActuel.asString().concat(" Points"));
 
-        HBox LignePendu = new HBox(10, btnRejouer, texteScore, hangman);
-        LignePendu.setAlignment(Pos.CENTER);
+        HBox HB_LignePendu = new HBox(10, BTN_Rejouer, BTN_Réglages, texteScore, hangman);
+        HB_LignePendu.setAlignment(Pos.CENTER);
 
         VBox vBox = new VBox(10);
         
         // Ajout élément graphique verticals
         vBox.getChildren().addAll(
-
-                ligneLettres,
-                ligneAlphabet,
-                LignePendu);
+                HB_ligneLettres,
+                HB_ligneAlphabet,
+                HB_LignePendu);
         return vBox;
     }
+    
+    
     /**
      * Fonction qui décrit ce qui se passe à l'arrêt de jeu
      */
@@ -147,19 +160,18 @@ public class TheHangmanGames extends Application {
      * Fonctionne qui décrit ce qui se passe au démarrage du jeu
      */
     private void demarrageJeu(){
-        
-        
+      
         for (Text t : alphabet.values()) {
             t.setStrikethrough(false);
             t.setFill(Color.BLACK);
         }
         //Tirer le mot aléatoirement 
         hangman.reset();
-        mot.set(LecteurMot.MotsAleatoires().toUpperCase());
-        lettreADeviner.set(mot.length().get());
+        motADeviner.set(LecteurMot.MotAleatoire().toUpperCase());
+        lettreADeviner.set(motADeviner.length().get());
        
         lettres.clear();
-       for (char c : mot.get().toCharArray()){
+       for (char c : motADeviner.get().toCharArray()){
            lettres.add(new Lettre(c));
            
            
@@ -280,32 +292,13 @@ public class TheHangmanGames extends Application {
     }
     
     public void start(Stage primaryStage) throws Exception {
-        
-        Scene scene = new Scene(CreationContenu());
-        
-        //Scène du menu avec une modal window
-        StackPane secondaryLayout = new StackPane();
-        Scene menuScene = new Scene(secondaryLayout, 230,100);
-        
-        // New window (Stage)
-        Stage menuFenetre = new Stage();
-        menuFenetre.setTitle("Menu");
-        menuFenetre.setScene(menuScene);
-        // Specifies the modality for new window.
-        menuFenetre.initModality(Modality.WINDOW_MODAL);
- 
-        // Specifies the owner Window (parent) for new window
-        menuFenetre.initOwner(primaryStage);
- 
-        // Set position of second window, related to primary window.
-        menuFenetre.setX(primaryStage.getX() + 200);
-        menuFenetre.setY(primaryStage.getY() + 100);
        
-
-        menuFenetre.show();
+        
+        Button BT_Menu = new Button("Menu !");
         
         
-        scene.setOnKeyPressed((KeyEvent event) -> {
+        Scene scènePendue = new Scene(CreationContenu());
+        scènePendue.setOnKeyPressed((KeyEvent event) -> {
             
             if (event.getText().isEmpty())
                 return;        
@@ -329,7 +322,7 @@ public class TheHangmanGames extends Application {
                     Lettre lettre = (Lettre) n;
                     if(lettre.estEgalA(touchePressee)){
                         trouver = true;
-                        scoreActuel.set(scoreActuel.get()+(int)(scoreAModifier  * pointsLettre));
+                        scoreActuel.set(scoreActuel.get()+(int)(scoreAModifier  * POINT_LETTRE));
                         lettreADeviner.set(lettreADeviner.get()- 1);
                         lettre.montrer();
                     }
@@ -343,14 +336,12 @@ public class TheHangmanGames extends Application {
                 }
             }
         });
-        
-        
-        
+     
         primaryStage.setResizable(false);
-        primaryStage.setWidth(APP_W);
-        primaryStage.setHeight(APP_H);
+        primaryStage.setWidth(TAILLE_APP_LARGEUR);
+        primaryStage.setHeight(TAILLE_APP_HAUTEUR);
         primaryStage.setTitle("Jeu du pendue || Jeu");
-        primaryStage.setScene(scene);
+        primaryStage.setScene(scènePendue);
         primaryStage.show();
         demarrageJeu();
     }
@@ -359,7 +350,6 @@ public class TheHangmanGames extends Application {
         launch(args);
      } 
 }
-   
 
      
      

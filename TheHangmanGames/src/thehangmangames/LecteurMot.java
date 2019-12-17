@@ -45,9 +45,7 @@ public class LecteurMot {
         if (listeMots.isEmpty()) return "Aucunes données";
         return listeMots.get((int)(Math.random()*listeMots.size()));
     }
-    
-    
-    
+
 
     
    
