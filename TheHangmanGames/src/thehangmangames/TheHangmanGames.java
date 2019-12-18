@@ -179,6 +179,8 @@ public class TheHangmanGames extends Application {
        
     }
     
+    
+    
     /**
      * Classe qui dessine le pendue
      */
@@ -292,11 +294,7 @@ public class TheHangmanGames extends Application {
     }
     
     public void start(Stage primaryStage) throws Exception {
-       
-        
-        Button BT_Menu = new Button("Menu !");
-        
-        
+
         Scene scènePendue = new Scene(CreationContenu());
         scènePendue.setOnKeyPressed((KeyEvent event) -> {
             

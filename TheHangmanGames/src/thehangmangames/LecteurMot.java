@@ -13,6 +13,10 @@ public class LecteurMot {
         
     private static final String fichierMots = "/ListMots/fr_MotsFaciles.txt";
     
+    
+    private FenetreModal fenetreMenu = new FenetreModal();
+
+    
     //Création d'une  liste pour les mots
     private ArrayList<String> listeMots = new ArrayList<String>();
 
@@ -22,6 +26,7 @@ public class LecteurMot {
     *Si la Fichier est vide ou introuvable une erreur est déclenché
     */
    public LecteurMot() {
+       fenetreMenu.choisirFichier(fichierMots);
        //InputStream -> Es utilisé pour lire des données d'une sources
         try (InputStream lectureDonnées = getClass().getResourceAsStream(fichierMots);
                 //BufferedReader -> Lit un texte à partir d'un flux d'entrée
@@ -44,9 +49,5 @@ public class LecteurMot {
     public String MotAleatoire() {
         if (listeMots.isEmpty()) return "Aucunes données";
         return listeMots.get((int)(Math.random()*listeMots.size()));
-    }
-
-
-    
-   
+    }  
 }

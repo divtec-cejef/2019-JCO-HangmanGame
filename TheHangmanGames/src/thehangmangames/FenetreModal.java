@@ -26,6 +26,10 @@ import javafx.stage.Stage;
  * @author mingsop
  */
 public class FenetreModal {
+    final ToggleGroup languesGroupe = new ToggleGroup();
+    static final ToggleButton TB_choixfacile = new ToggleButton("Facile");
+    static final ToggleButton TB_choixDifficile = new ToggleButton("Difficile");
+    
     public static void nouvelleFenetre(String title){
         
         Stage fenêtreMenu = new Stage();
@@ -33,7 +37,7 @@ public class FenetreModal {
         
         Pane pane = new Pane();
         
-        Button BT_Fermeture = new Button("Fermer");
+        Button BT_Fermeture = new Button("Confirmer et jouer");
         BT_Fermeture.setOnAction(event->fenêtreMenu.close());
         //Création d'un checkbox pour les indices
         CheckBox CB_indices = new CheckBox("Oui je les veux !");
@@ -41,8 +45,7 @@ public class FenetreModal {
         final ToggleGroup languesGroupe = new ToggleGroup();
 
         //Creation des boutons
-        ToggleButton TB_choixfacile = new ToggleButton("Facile");
-        ToggleButton TB_choixDifficile = new ToggleButton("Difficile");
+        
         //Création du bouton pour commencé le jeu
         Button BTN_DemarrageJeu = new Button();
         BTN_DemarrageJeu.setText("Jouons !");
@@ -77,6 +80,19 @@ public class FenetreModal {
             }
         });
         
+        //Lorsque le bouton fermer est appuyé vérifier les réglages fait
+        BT_Fermeture.setOnAction(new EventHandler<ActionEvent>() {
+            @Override 
+            public void handle(ActionEvent e) {
+                
+                
+                
+                 
+                
+            }
+        });
+        
+        
         //Création d'un ligne de composants des boutons Français
         HBox HB_boutonChoix = new HBox(TB_choixfacile, TB_choixDifficile);
         HB_boutonChoix.setSpacing(10);     
@@ -99,7 +115,28 @@ public class FenetreModal {
         fenêtreMenu.setScene(sceneMenu);
         fenêtreMenu.setTitle(title);
         fenêtreMenu.showAndWait();
+        
     }
+        public String choisirFichier(String nomfichier){
+         if(languesGroupe.toString() == "Anglais"){
+            if (TB_choixfacile.isSelected() == true){
+                    return nomfichier = "/ListMots/an_WordsEasy";
+            }else{
+                return nomfichier = "/ListMots/an_WordHard";
+            }
+        }else if(languesGroupe.toString() == "Français"){
+            if (TB_choixfacile.isSelected() == true){
+                    return nomfichier = "/ListMots/fr_MotsFaciles";
+        }else{
+            return nomfichier = "/ListMots/fr_MotsDifficiles";
+        } 
+        }
+        return nomfichier;
+    }
+       
+    
+
+      
     
     
 }
