@@ -159,7 +159,7 @@ public class TheHangmanGames extends Application {
     /**
      * Fonctionne qui décrit ce qui se passe au démarrage du jeu
      */
-    private void demarrageJeu(){
+    public void demarrageJeu(){
       
         for (Text t : alphabet.values()) {
             t.setStrikethrough(false);
