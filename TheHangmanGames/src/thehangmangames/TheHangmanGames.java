@@ -83,6 +83,11 @@ public class TheHangmanGames extends Application {
     private HangmanImage hangman = new HangmanImage();
 
     private LecteurMot LecteurMot = new LecteurMot();
+    
+    private FenetreModal fenetreModal = new FenetreModal();
+    
+    private String titreFenetre = "Menu || Jeu du Pendu";
+    
       
     
     
@@ -105,7 +110,7 @@ public class TheHangmanGames extends Application {
         
         Pane root = new Pane();
         Button BTN_Réglages = new Button("Réglages");
-        BTN_Réglages.setOnAction(event->FenetreModal.nouvelleFenetre("Menu|| Jeu du pendu"));
+        //BTN_Réglages.setOnAction(event->FenetreModal.nouvelleFenetre("Menu|| Jeu du pendu"));
         
         root.getChildren().add(BTN_Réglages);
         Scene scèneMenu = new Scene(root, 300,300);
@@ -155,11 +160,15 @@ public class TheHangmanGames extends Application {
             
         }
     }
-    
+    public void lancerFenetreModal(){
+        fenetreModal.nouvelleFenetre(titreFenetre);
+        
+    }
     /**
      * Fonctionne qui décrit ce qui se passe au démarrage du jeu
      */
     public void demarrageJeu(){
+        lancerFenetreModal();
       
         for (Text t : alphabet.values()) {
             t.setStrikethrough(false);
