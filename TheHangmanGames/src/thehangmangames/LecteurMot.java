@@ -6,13 +6,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
- * Cette classe est utilisé pour ce qui concerne le tirage du mot et la lecture 
- * Dans le fichier
+ *
  * @author mingsop
  */
 public class LecteurMot {
         
-    private static final String fichierMots = "";
+    private static final String fichierMots = "/ListMots/fr_MotsFaciles.txt";
     
     
     private FenetreModal fenetreMenu = new FenetreModal();
@@ -48,7 +47,7 @@ public class LecteurMot {
  * @return le mot tirée aléatoirement
  */
     public String MotAleatoire() {
-        if (listeMots.isEmpty()) return "aucune donnee";
+        if (listeMots.isEmpty()) return "Aucunes données";
         return listeMots.get((int)(Math.random()*listeMots.size()));
     }  
 }

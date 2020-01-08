@@ -1,7 +1,11 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package thehangmangames;
 
-
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -9,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -17,24 +22,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * Cette classe concerne le menu réglages qui permet de changer la difficultés
- * et la langue du mot.
+ *
  * @author mingsop
  */
 public class FenetreModal {
     final ToggleGroup languesGroupe = new ToggleGroup();
-    static  Button TB_choixfacile = new Button("Facile");
-    static  Button TB_choixDifficile = new Button("Difficile");
-    static TheHangmanGames demarrerJeu = new TheHangmanGames();
+    static final ToggleButton TB_choixfacile = new ToggleButton("Facile");
+    static final ToggleButton TB_choixDifficile = new ToggleButton("Difficile");
     
-    //Création d'un radioButton      
-    static RadioButton RB_langueFrancais = new RadioButton("Français");
-    static RadioButton RB_langueAnglais = new RadioButton("Anglais");
-    
-    /**
-    * Methode pour créer et afficher le contenu
-    * @param title nom de la fênetre
-    */
     public static void nouvelleFenetre(String title){
         
         Stage fenêtreMenu = new Stage();
@@ -43,6 +38,7 @@ public class FenetreModal {
         Pane pane = new Pane();
         
         Button BT_Fermeture = new Button("Confirmer et jouer");
+        BT_Fermeture.setOnAction(event->fenêtreMenu.close());
         //Création d'un checkbox pour les indices
         CheckBox CB_indices = new CheckBox("Oui je les veux !");
         //Création un groupe
@@ -54,16 +50,19 @@ public class FenetreModal {
         Button BTN_DemarrageJeu = new Button();
         BTN_DemarrageJeu.setText("Jouons !");
         
-        //MISE EN COMMENTAIRE CAR TEST
         //Ajout dans un groupe pour le groupe français
-        //ToggleGroup TG_choixGroupe = new ToggleGroup();
-        //TG_choixGroupe.getToggles().addAll(TB_choixfacile, TB_choixDifficile);
+        ToggleGroup TG_choixGroupe = new ToggleGroup();
+        TG_choixGroupe.getToggles().addAll(TB_choixfacile, TB_choixDifficile);
  
         //Création d'un nouveau label
         Label LB_utilisateurDifficulte = new Label("Difficulté choisie :");
         
         //Creation d'un label pour les langues
         Label LB_languesLabel = new Label ("Choix de la langue : ");
+        
+        //Création d'un radioButton      
+        RadioButton RB_langueFrancais = new RadioButton("Français");
+        RadioButton RB_langueAnglais = new RadioButton("Anglais");
         
         //Ajout d'un groupe
         RB_langueFrancais.setToggleGroup(languesGroupe);
@@ -72,13 +71,24 @@ public class FenetreModal {
        //creation d'un label pour les indices
         Label LB_indices = new Label("Voulez-vous des indices ?");
         
+        //Lorsque le bouton est appuyé on lance le jeu 
+        BTN_DemarrageJeu.setOnAction(new EventHandler<ActionEvent>() {
+            @Override 
+            public void handle(ActionEvent e) {
+                 Application.launch(TheHangmanGames.class);
+                
+            }
+        });
+        
         //Lorsque le bouton fermer est appuyé vérifier les réglages fait
         BT_Fermeture.setOnAction(new EventHandler<ActionEvent>() {
             @Override 
             public void handle(ActionEvent e) {
                 
-                demarrerJeu.demarrageJeu();
-                 BT_Fermeture.setOnAction(event->fenêtreMenu.close());
+                
+                
+                 
+                
             }
         });
         
@@ -107,29 +117,22 @@ public class FenetreModal {
         fenêtreMenu.showAndWait();
         
     }
-        /**
-         * Fonctionne qui retourne le chemin selon la langue et la difficulté
-         * @param nomfichier chemin du fichier
-         * @return 
-         */
         public String choisirFichier(String nomfichier){
-            if(RB_langueAnglais.isPressed()){
-                if (!TB_choixfacile.isPressed()){
-                    return nomfichier = "/ListMots/an_WordHard";
-                }else{
+         if(languesGroupe.toString() == "Anglais"){
+            if (TB_choixfacile.isSelected() == true){
                     return nomfichier = "/ListMots/an_WordsEasy";
-                }
-                
-            }else if(RB_langueFrancais.isPressed()){                
-                if (TB_choixfacile.isPressed()){
-                    return nomfichier = "/ListMots/fr_MotsFaciles";
-                }else{
-                    return nomfichier = "/ListMots/fr_MotsDifficiles";
-                } 
+            }else{
+                return nomfichier = "/ListMots/an_WordHard";
             }
-            return nomfichier;
+        }else if(languesGroupe.toString() == "Français"){
+            if (TB_choixfacile.isSelected() == true){
+                    return nomfichier = "/ListMots/fr_MotsFaciles";
+        }else{
+            return nomfichier = "/ListMots/fr_MotsDifficiles";
+        } 
         }
-        
+        return nomfichier;
+    }
        
     
 
