@@ -27,10 +27,14 @@ import javafx.stage.Stage;
  */
 public class FenetreModal {
     final ToggleGroup languesGroupe = new ToggleGroup();
-    static final ToggleButton TB_choixfacile = new ToggleButton("Facile");
-    static final ToggleButton TB_choixDifficile = new ToggleButton("Difficile");
+    static ToggleButton TB_choixfacile = new ToggleButton("Facile");
+    static ToggleButton TB_choixDifficile = new ToggleButton("Difficile");
+    
     
     public static void nouvelleFenetre(String title){
+        
+        LecteurMot choixMot = new LecteurMot();
+        TheHangmanGames changerMotsApresChangement = new TheHangmanGames();
         
         Stage fenêtreMenu = new Stage();
         fenêtreMenu.initModality(Modality.APPLICATION_MODAL);
@@ -70,25 +74,14 @@ public class FenetreModal {
         
        //creation d'un label pour les indices
         Label LB_indices = new Label("Voulez-vous des indices ?");
-        
-        //Lorsque le bouton est appuyé on lance le jeu 
-        BTN_DemarrageJeu.setOnAction(new EventHandler<ActionEvent>() {
-            @Override 
-            public void handle(ActionEvent e) {
-                 Application.launch(TheHangmanGames.class);
                 
-            }
-        });
-        
         //Lorsque le bouton fermer est appuyé vérifier les réglages fait
         BT_Fermeture.setOnAction(new EventHandler<ActionEvent>() {
             @Override 
             public void handle(ActionEvent e) {
-                
-                
-                
-                 
-                
+                choixMot.MotAleatoire();
+                changerMotsApresChangement.demarrageJeu();
+                fenêtreMenu.close();              
             }
         });
         
