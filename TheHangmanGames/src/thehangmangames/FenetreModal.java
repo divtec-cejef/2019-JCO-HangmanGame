@@ -22,19 +22,20 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- *
+ * Cette classe gère l'affichage de la fenêtre modal "Menu"
  * @author mingsop
  */
 public class FenetreModal {
     final ToggleGroup languesGroupe = new ToggleGroup();
-    static ToggleButton TB_choixfacile = new ToggleButton("Facile");
-    static ToggleButton TB_choixDifficile = new ToggleButton("Difficile");
     
+    //Création des radioButton      
+    static Button RB_langueFrancais = new Button("Français");
+    static Button RB_langueAnglais = new Button("Anglais");
+    static RadioButton RB_choixfacile = new RadioButton("Facile");
+    static RadioButton RB_choixDifficile = new RadioButton("Difficile");
     
-    public static void nouvelleFenetre(String title){
-        
+    public void nouvelleFenetre(String title){
         LecteurMot choixMot = new LecteurMot();
-        TheHangmanGames changerMotsApresChangement = new TheHangmanGames();
         
         Stage fenêtreMenu = new Stage();
         fenêtreMenu.initModality(Modality.APPLICATION_MODAL);
@@ -47,47 +48,36 @@ public class FenetreModal {
         CheckBox CB_indices = new CheckBox("Oui je les veux !");
         //Création un groupe
         final ToggleGroup languesGroupe = new ToggleGroup();
-
-        //Creation des boutons
-        
-        //Création du bouton pour commencé le jeu
-        Button BTN_DemarrageJeu = new Button();
-        BTN_DemarrageJeu.setText("Jouons !");
         
         //Ajout dans un groupe pour le groupe français
         ToggleGroup TG_choixGroupe = new ToggleGroup();
-        TG_choixGroupe.getToggles().addAll(TB_choixfacile, TB_choixDifficile);
+        //TG_choixGroupe.getToggles().addAll(TB_choixfacile, TB_choixDifficile);
  
         //Création d'un nouveau label
         Label LB_utilisateurDifficulte = new Label("Difficulté choisie :");
         
         //Creation d'un label pour les langues
         Label LB_languesLabel = new Label ("Choix de la langue : ");
-        
-        //Création d'un radioButton      
-        RadioButton RB_langueFrancais = new RadioButton("Français");
-        RadioButton RB_langueAnglais = new RadioButton("Anglais");
-        
+               
         //Ajout d'un groupe
-        RB_langueFrancais.setToggleGroup(languesGroupe);
-        RB_langueAnglais.setToggleGroup(languesGroupe);
+      //  RB_langueFrancais.setToggleGroup(languesGroupe);
+        //RB_langueAnglais.setToggleGroup(languesGroupe);
         
        //creation d'un label pour les indices
         Label LB_indices = new Label("Voulez-vous des indices ?");
                 
-        //Lorsque le bouton fermer est appuyé vérifier les réglages fait
+        //Lorsque le bouton fermer la fênetre se ferme
         BT_Fermeture.setOnAction(new EventHandler<ActionEvent>() {
             @Override 
             public void handle(ActionEvent e) {
                 choixMot.MotAleatoire();
-                changerMotsApresChangement.demarrageJeu();
                 fenêtreMenu.close();              
             }
         });
         
         
         //Création d'un ligne de composants des boutons Français
-        HBox HB_boutonChoix = new HBox(TB_choixfacile, TB_choixDifficile);
+        HBox HB_boutonChoix = new HBox(RB_choixDifficile, RB_choixDifficile);
         HB_boutonChoix.setSpacing(10);     
         
         //Création de la ligne de composant pour la checkbox
@@ -111,23 +101,30 @@ public class FenetreModal {
         
     }
         public String choisirFichier(String nomfichier){
-         if(languesGroupe.toString() == "Anglais"){
-            if (TB_choixfacile.isSelected() == true){
-                    return nomfichier = "/ListMots/an_WordsEasy";
+         if(RB_langueAnglais.isPressed()){
+            if (RB_choixfacile.isSelected() == true){
+                    return nomfichier = "/ListMots/an_WordsEasy.txt";
             }else{
-                return nomfichier = "/ListMots/an_WordHard";
+                return nomfichier = "/ListMots/an_WordHard.txt";
             }
-        }else if(languesGroupe.toString() == "Français"){
-            if (TB_choixfacile.isSelected() == true){
-                    return nomfichier = "/ListMots/fr_MotsFaciles";
+        }else if(RB_langueFrancais.isPressed()){
+            if (RB_choixfacile.isSelected() == true){
+                    return nomfichier = "/ListMots/fr_MotsFaciles.txt";
         }else{
-            return nomfichier = "/ListMots/fr_MotsDifficiles";
+            return nomfichier = "/ListMots/fr_MotsDifficiles.txt";
         } 
         }
         return nomfichier;
     }
        
     
+    public String choixDifficulté(String choixDifficulte){
+        if(RB_choixDifficile.isPressed()){
+            return choixDifficulte = "fr_MotsFaciles.txt";
+        }else{
+            return choixDifficulte ="fr_MotsDifficile.txt";
+        }
+    }
 
       
     

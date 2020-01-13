@@ -83,6 +83,10 @@ public class TheHangmanGames extends Application {
     private HangmanImage hangman = new HangmanImage();
 
     private LecteurMot LecteurMot = new LecteurMot();
+    
+    private FenetreModal fenetreModal = new FenetreModal();
+     
+    private String titreFenetre = "Menu || Jeu du Pendu";
       
     
     
@@ -104,10 +108,8 @@ public class TheHangmanGames extends Application {
         BTN_Rejouer.setOnAction(event -> demarrageJeu());
         
         Pane root = new Pane();
-        Button BTN_Réglages = new Button("Réglages");
-        BTN_Réglages.setOnAction(event->FenetreModal.nouvelleFenetre("Menu|| Jeu du pendu"));
         
-        root.getChildren().add(BTN_Réglages);
+
         Scene scèneMenu = new Scene(root, 300,300);
 
         
@@ -131,7 +133,7 @@ public class TheHangmanGames extends Application {
         Text texteScore = new Text();
         texteScore.textProperty().bind(scoreActuel.asString().concat(" Points"));
 
-        HBox HB_LignePendu = new HBox(10, BTN_Rejouer, BTN_Réglages, texteScore, hangman);
+        HBox HB_LignePendu = new HBox(10, BTN_Rejouer, texteScore, hangman);
         HB_LignePendu.setAlignment(Pos.CENTER);
 
         VBox vBox = new VBox(10);
@@ -156,10 +158,17 @@ public class TheHangmanGames extends Application {
         }
     }
     
+    public void lancerFenetreModal(){
+        fenetreModal.nouvelleFenetre(titreFenetre);
+        
+    }
+    
     /**
-     * Fonctionne qui décrit ce qui se passe au démarrage du jeu
+     * Fonction qui décrit ce qui se passe au démarrage du jeu
      */
     public void demarrageJeu(){
+        
+        lancerFenetreModal();
       
         for (Text t : alphabet.values()) {
             t.setStrikethrough(false);

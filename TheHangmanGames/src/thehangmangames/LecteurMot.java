@@ -26,7 +26,8 @@ public class LecteurMot {
     *Si la Fichier est vide ou introuvable une erreur est déclenché
     */
    public LecteurMot() {
-       fenetreMenu.choisirFichier(fichierMots);
+       //Choisir le fichier selon le choix dans le menu
+       fenetreMenu.choixDifficulté(fichierMots);
        //InputStream -> Es utilisé pour lire des données d'une sources
         try (InputStream lectureDonnées = getClass().getResourceAsStream(fichierMots);
                 //BufferedReader -> Lit un texte à partir d'un flux d'entrée
