@@ -31,7 +31,7 @@ public class FenetreModal {
     static ToggleButton TB_choixDifficile = new ToggleButton("Difficile");
     
     
-    public void nouvelleFenetre(String title){
+    public static void nouvelleFenetre(String title){
         
         LecteurMot choixMot = new LecteurMot();
         TheHangmanGames changerMotsApresChangement = new TheHangmanGames();
@@ -80,6 +80,7 @@ public class FenetreModal {
             @Override 
             public void handle(ActionEvent e) {
                 choixMot.MotAleatoire();
+                changerMotsApresChangement.demarrageJeu();
                 fenêtreMenu.close();              
             }
         });
