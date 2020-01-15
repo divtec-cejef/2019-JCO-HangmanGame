@@ -74,12 +74,12 @@ public class TheHangmanGames extends Application {
     private SimpleBooleanProperty jouable = new SimpleBooleanProperty();
      
      
-     
     private ObservableList<Node> lettres;
-     
-     
+         
     private final HashMap<Character, Text> alphabet = new HashMap<Character, Text>();
     
+    
+    //Création des objets 
     private HangmanImage hangman = new HangmanImage();
 
     private LecteurMot LecteurMot = new LecteurMot();
@@ -159,7 +159,7 @@ public class TheHangmanGames extends Application {
     }
     
     public void lancerFenetreModal(){
-        fenetreModal.nouvelleFenetre(titreFenetre);
+       fenetreModal.nouvelleFenetre(titreFenetre);
         
     }
     
@@ -168,6 +168,7 @@ public class TheHangmanGames extends Application {
      */
     public void demarrageJeu(){
         
+        //Lancement de la fenetre de menu 
         lancerFenetreModal();
       
         for (Text t : alphabet.values()) {

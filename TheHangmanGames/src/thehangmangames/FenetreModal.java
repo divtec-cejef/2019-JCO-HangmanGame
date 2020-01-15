@@ -5,7 +5,6 @@
  */
 package thehangmangames;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -29,12 +28,14 @@ public class FenetreModal {
     final ToggleGroup languesGroupe = new ToggleGroup();
     
     //Création des radioButton      
-    static Button RB_langueFrancais = new Button("Français");
-    static Button RB_langueAnglais = new Button("Anglais");
+    static ToggleButton RB_langueFrancais = new ToggleButton("Français");
+    static ToggleButton RB_langueAnglais = new ToggleButton("Anglais");
+    
     static RadioButton RB_choixfacile = new RadioButton("Facile");
     static RadioButton RB_choixDifficile = new RadioButton("Difficile");
     
     public void nouvelleFenetre(String title){
+        
         LecteurMot choixMot = new LecteurMot();
         
         Stage fenêtreMenu = new Stage();
@@ -44,28 +45,23 @@ public class FenetreModal {
         
         Button BT_Fermeture = new Button("Confirmer et jouer");
         BT_Fermeture.setOnAction(event->fenêtreMenu.close());
+        
         //Création d'un checkbox pour les indices
         CheckBox CB_indices = new CheckBox("Oui je les veux !");
-        //Création un groupe
-        final ToggleGroup languesGroupe = new ToggleGroup();
         
         //Ajout dans un groupe pour le groupe français
         ToggleGroup TG_choixGroupe = new ToggleGroup();
-        //TG_choixGroupe.getToggles().addAll(TB_choixfacile, TB_choixDifficile);
+        TG_choixGroupe.getToggles().addAll(RB_choixfacile, RB_choixDifficile);
  
         //Création d'un nouveau label
         Label LB_utilisateurDifficulte = new Label("Difficulté choisie :");
         
         //Creation d'un label pour les langues
         Label LB_languesLabel = new Label ("Choix de la langue : ");
-               
-        //Ajout d'un groupe
-      //  RB_langueFrancais.setToggleGroup(languesGroupe);
-        //RB_langueAnglais.setToggleGroup(languesGroupe);
-        
+      
        //creation d'un label pour les indices
         Label LB_indices = new Label("Voulez-vous des indices ?");
-                
+              
         //Lorsque le bouton fermer la fênetre se ferme
         BT_Fermeture.setOnAction(new EventHandler<ActionEvent>() {
             @Override 
@@ -100,7 +96,7 @@ public class FenetreModal {
         fenêtreMenu.showAndWait();
         
     }
-        public String choisirFichier(String nomfichier){
+        /*public String choisirFichier(String nomfichier){
          if(RB_langueAnglais.isPressed()){
             if (RB_choixfacile.isSelected() == true){
                     return nomfichier = "/ListMots/an_WordsEasy.txt";
@@ -115,7 +111,7 @@ public class FenetreModal {
         } 
         }
         return nomfichier;
-    }
+    }*/
        
     
     public String choixDifficulté(String choixDifficulte){
