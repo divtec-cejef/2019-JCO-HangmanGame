@@ -6,16 +6,15 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
- *
+ * Cette classe gère ce qui concerne les mots
+ * la lecture et le tirage au sort
  * @author mingsop
  */
 public class LecteurMot {
-        
+    //Chemin du fichier texte par défaut    
     private static final String fichierMots = "/ListMots/fr_MotsFaciles.txt";
     
-    
     private FenetreModal fenetreMenu = new FenetreModal();
-
     
     //Création d'une  liste pour les mots
     private ArrayList<String> listeMots = new ArrayList<String>();

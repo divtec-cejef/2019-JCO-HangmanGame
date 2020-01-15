@@ -7,7 +7,6 @@ package thehangmangames;
 
 
 import java.util.HashMap;
-import java.util.HashSet;
 
 import javafx.animation.RotateTransition;
 import javafx.application.Application;
@@ -16,18 +15,11 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -40,21 +32,21 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 
 
 /**
- *
+ * Application principale du jeu HangmanGames
  * @author mingsop
  */
 public class TheHangmanGames extends Application {
+    
     private static final int TAILLE_APP_LARGEUR = 900;
     private static final int TAILLE_APP_HAUTEUR = 500;
     
-    private static final Font DEFAULT_FONT = new Font("Courier", 36);
+    private static final Font POLICE_DEFAUT = new Font("Courier", 36);
     private static final float BONUS_MODIFIER = 0.2f;
     
     private static final int POINT_LETTRE = 100;
@@ -72,8 +64,7 @@ public class TheHangmanGames extends Application {
      
      //Le jeu est-il jouable
     private SimpleBooleanProperty jouable = new SimpleBooleanProperty();
-     
-     
+    
     private ObservableList<Node> lettres;
          
     private final HashMap<Character, Text> alphabet = new HashMap<Character, Text>();
@@ -88,9 +79,11 @@ public class TheHangmanGames extends Application {
      
     private String titreFenetre = "Menu || Jeu du Pendu";
       
-    
-    
-
+  
+    /**
+     * Créer l'interface graphique du jeu
+     * @return une Vbox qui affiche les élément graphiques
+     */
     public Parent CreationContenu(){
         
         HBox HB_ligneLettres = new HBox();
@@ -108,25 +101,21 @@ public class TheHangmanGames extends Application {
         BTN_Rejouer.setOnAction(event -> demarrageJeu());
         
         Pane root = new Pane();
-        
-
+ 
         Scene scèneMenu = new Scene(root, 300,300);
-
-        
-        
-        
+  
         HBox HB_ligneAlphabet = new HBox(5);
         HB_ligneAlphabet.setAlignment(Pos.CENTER);
         
         for (char c = 'A'; c <= 'Z'; c++) {
             Text t = new Text(String.valueOf(c));
-            t.setFont(DEFAULT_FONT);
+            t.setFont(POLICE_DEFAUT);
             alphabet.put(c, t);
             HB_ligneAlphabet.getChildren().add(t);
         }
 
         Text tiret = new Text("-");
-        tiret.setFont(DEFAULT_FONT);
+        tiret.setFont(POLICE_DEFAUT);
         alphabet.put('-', tiret);
         HB_ligneAlphabet.getChildren().add(tiret);
 
@@ -158,6 +147,9 @@ public class TheHangmanGames extends Application {
         }
     }
     
+    /**
+     * Cette méthode lance une fenetre modal
+     */
     public void lancerFenetreModal(){
        fenetreModal.nouvelleFenetre(titreFenetre);
         
@@ -169,7 +161,7 @@ public class TheHangmanGames extends Application {
     public void demarrageJeu(){
         
         //Lancement de la fenetre de menu 
-        lancerFenetreModal();
+        //lancerFenetreModal(); -> mise en commentaire car provoque des crash
       
         for (Text t : alphabet.values()) {
             t.setStrikethrough(false);
@@ -184,10 +176,9 @@ public class TheHangmanGames extends Application {
        for (char c : motADeviner.get().toCharArray()){
            lettres.add(new Lettre(c));
            
-           
-       }
-       
+       }   
     }
+    
     /**
      * Classe qui dessine le pendue
      */
@@ -246,12 +237,15 @@ public class TheHangmanGames extends Application {
             coups.set(getChildren().size());
         }
 
+        /**
+         * retire la vie quand il y a une lettre qui est tiré qui est mauvaise
+         */
         public void retirerVie() {
             for (Node n : getChildren()) {
                 if (!n.isVisible()) {
-                    n.setVisible(true);
-                    coups.set(coups.get() - 1);
-                    break;
+                        n.setVisible(true);
+                        coups.set(coups.get() - 1);
+                        break;
                 }
             }
         }
@@ -261,7 +255,6 @@ public class TheHangmanGames extends Application {
     public static class Lettre extends StackPane {
         private Rectangle rectangle = new Rectangle(40, 60);
         private Text text;
-        
         
         /**
          * 
@@ -273,7 +266,7 @@ public class TheHangmanGames extends Application {
             rectangle.setStroke(Color.PINK);
 
             text = new Text(String.valueOf(lettre).toUpperCase());
-            text.setFont(DEFAULT_FONT);
+            text.setFont(POLICE_DEFAUT);
             text.setVisible(false);
 
             setAlignment(Pos.CENTER);
@@ -299,7 +292,11 @@ public class TheHangmanGames extends Application {
             return text.getText().equals(String.valueOf(autre).toUpperCase());
         }
     }
-    
+    /**
+     * Cette méthode décrit ce qui se passe dans le jeu
+     * @param primaryStage
+     * @throws Exception 
+     */
     public void start(Stage primaryStage) throws Exception {
 
         Scene scènePendue = new Scene(CreationContenu());

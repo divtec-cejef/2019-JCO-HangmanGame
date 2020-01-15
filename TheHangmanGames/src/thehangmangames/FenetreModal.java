@@ -25,15 +25,22 @@ import javafx.stage.Stage;
  * @author mingsop
  */
 public class FenetreModal {
-    final ToggleGroup languesGroupe = new ToggleGroup();
     
-    //Création des radioButton      
-    static ToggleButton RB_langueFrancais = new ToggleButton("Français");
-    static ToggleButton RB_langueAnglais = new ToggleButton("Anglais");
+    //Création d'un groupe pour les togglesbuttons
+    final ToggleGroup TG_languesGroupe = new ToggleGroup();
     
+    //Création des togglesButtons 
+    static ToggleButton TB_langueFrancais = new ToggleButton("Français");
+    static ToggleButton TB_langueAnglais = new ToggleButton("Anglais");
+    
+    //Création des radioButton 
     static RadioButton RB_choixfacile = new RadioButton("Facile");
     static RadioButton RB_choixDifficile = new RadioButton("Difficile");
     
+    /**
+     * methode qui définit le style graphique de la fenêtre
+     * @param title le titre de la fenetre
+     */
     public void nouvelleFenetre(String title){
         
         LecteurMot choixMot = new LecteurMot();
@@ -81,7 +88,7 @@ public class FenetreModal {
         HB_indices.setSpacing(30);
         
         //Création de la ligne de composant pour les radios Buttons
-        HBox langueHB = new HBox(RB_langueFrancais, RB_langueAnglais);
+        HBox langueHB = new HBox(TB_langueFrancais, TB_langueAnglais);
         langueHB.setSpacing(30);
         
         //Création d'une ligne verticale de composant
@@ -96,6 +103,7 @@ public class FenetreModal {
         fenêtreMenu.showAndWait();
         
     }
+        //Méthode en commentaire car non fonctionnelle
         /*public String choisirFichier(String nomfichier){
          if(RB_langueAnglais.isPressed()){
             if (RB_choixfacile.isSelected() == true){
@@ -113,7 +121,11 @@ public class FenetreModal {
         return nomfichier;
     }*/
        
-    
+    /**
+     * Fonctionne qui retourne la chaine de caractère du chemin du fichier
+     * @param choixDifficulte difficulté choisi par l'utilisateur
+     * @return 
+     */
     public String choixDifficulté(String choixDifficulte){
         if(RB_choixDifficile.isPressed()){
             return choixDifficulte = "fr_MotsFaciles.txt";
